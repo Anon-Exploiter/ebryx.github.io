@@ -1,0 +1,81 @@
+---
+---
+
+{% include head.html %}
+<body class="page-template page-template-elementor_header_footer page page-id-949 wp-custom-logo wp-embed-responsive multiple-domain-ebryx-com no-sidebar nav-below-header fluid-header separate-containers active-footer-widgets-3 nav-aligned-left header-aligned-left dropdown-hover elementor-default elementor-template-full-width elementor-kit-2650 elementor-page elementor-page-949 full-width-content cookies-set cookies-accepted" itemtype="https://schema.org/WebPage" itemscope="" data-elementor-device-mode="desktop">
+	{% include header.html %}
+
+	{% include homepage_intro.html %}
+	
+	
+	<section class="elementor-section elementor-top-section elementor-element elementor-element-72fe9001 elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="72fe9001" data-element_type="section" data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+		<div class="elementor-container elementor-column-gap-default">
+			<div class="elementor-row">
+				<div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-7444af2a" data-id="7444af2a" data-element_type="column">
+					<div class="elementor-column-wrap elementor-element-populated">
+						<div class="elementor-widget-wrap">
+							{% assign start = 0 %}
+							{% assign stop = 3 %}
+							{% assign count = 0 %}
+							{% for post in paginator.posts %}
+							{% if count == start %}
+							<section class="elementor-section elementor-inner-section elementor-element elementor-element-5414a917 process-row elementor-section-boxed elementor-section-height-default elementor-section-height-default" data-id="5414a917" data-element_type="section">
+								<div class="elementor-container elementor-column-gap-default">
+									<div class="elementor-row">
+										{% endif %}
+										<div class="elementor-column elementor-col-25 elementor-inner-column elementor-element elementor-element-29b0a9a8" data-id="29b0a9a8" data-element_type="column">
+											<div class="elementor-column-wrap elementor-element-populated">
+												<div class="elementor-widget-wrap">
+													<div class="elementor-element elementor-element-11633653 elementor-flip-box--effect-slide elementor-flip-box--direction-up elementor-widget elementor-widget-flip-box" data-id="11633653" data-element_type="widget" data-widget_type="flip-box.default">
+														<div class="elementor-widget-container">
+															<div class="elementor-flip-box">
+																<a href="{{ post.url }}">
+																	<div class="elementor-flip-box__layer elementor-flip-box__front">
+																		<div class="elementor-flip-box__layer__overlay">
+																			<div class="elementor-flip-box__layer__inner">
+																				<div class="elementor-flip-box__layer__description">
+																					<h1>{{ post.title }}</h1>
+																					<p class="process-val">{{ post.date | date: "%a, %d %b, %y" }}</p>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="elementor-flip-box__layer elementor-flip-box__back" href="{{ post.url }}">
+																		<div class="elementor-flip-box__layer__overlay">
+																			<div class="elementor-flip-box__layer__inner">
+																				<div class="elementor-flip-box__layer__description">
+																					<p class="process-num">Tags:</p>
+																					{{ post.tags }}
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% assign next_post = count | plus: 1 %}
+										{% if count == stop or next_post == paginator.total_posts %}
+									</div>
+								</div>
+							</section>
+							{% assign start = start | plus: 4 %}
+							{% assign stop = stop | plus: 4 %}
+							{% endif %}
+							{% assign count = count | plus: 1 %}
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% include homepage_footer.html %}
+
+	{% include footer.html %}
+</body>
+</html>
