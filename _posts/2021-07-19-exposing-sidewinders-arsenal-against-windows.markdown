@@ -8,16 +8,16 @@ authors: ahmad-muneeb-khan , syed-hasan-akhtar
 
 # {{ page.title }}
 __Published:__ {{ page.date | date: "%a, %d %b, %y" }}  
-__Authors:__ [Ahmad Muneeb Khan](/authors/ahmad-muneeb-khan.html), [Syed Hasan Akhtar](/authors/syed-hasan-akhtar.html)  
-__Tags:__ [Sidewinder](/tags/sidewinder.html), [RAT](/tags/rat.html)  
+__Authors:__ [<u>Ahmad Muneeb Khan</u>](/authors/ahmad-muneeb-khan.html), [<u>Syed Hasan Akhtar</u>](/authors/syed-hasan-akhtar.html)  
+__Tags:__ [<u>Sidewinder</u>](/tags/sidewinder.html), [<u>RAT</u>](/tags/rat.html)  
 
 ## Background
 
-While chasing the spear-phishing campaigns carried out in the South-Asian region by the well-known threat activity group “[Sidewinder](https://attack.mitre.org/groups/G0121/)” (a.k.a Rattlesnake, T-APT-04), Ebryx investigators witnessed the evolution of Sidewinder’s tactics and arsenal as it made attempts to evade detection and achieve its operational objectives. Sidewinder’s tools of choice for targeting Windows based machines primarily consist of two malware strains that Ebryx identifies as SNAKEBITE - a JavaScript-based dropper, MEMFANG - an in-memory implant, and S-VENOM - a RAT used by Sidewinder for accessing compromised Windows machines.
+While chasing the spear-phishing campaigns carried out in the South-Asian region by the well-known threat activity group “[<u>Sidewinder</u>](https://attack.mitre.org/groups/G0121/)” (a.k.a Rattlesnake, T-APT-04), Ebryx investigators witnessed the evolution of Sidewinder’s tactics and arsenal as it made attempts to evade detection and achieve its operational objectives. Sidewinder’s tools of choice for targeting Windows based machines primarily consist of two malware strains that Ebryx identifies as SNAKEBITE - a JavaScript-based dropper, MEMFANG - an in-memory implant, and S-VENOM - a RAT used by Sidewinder for accessing compromised Windows machines.
 
 ## SNAKEBITE
 
-SNAKEBITE is a JavaScript based dropper that is not unique in nature, rather it is an amalgam of a custom decryption technique and open-source offensive tools. It has two distinct parts which include its own decryption scheme and a modified [Starfighters](https://github.com/Cn33liz/StarFighters) implementation of [Koadic](https://github.com/zerosum0x0/koadic) (an information gathering implant to perform post-exploitation reconnaissance on the victim machine) to load the payload in-memory.
+SNAKEBITE is a JavaScript based dropper that is not unique in nature, rather it is an amalgam of a custom decryption technique and open-source offensive tools. It has two distinct parts which include its own decryption scheme and a modified [<u>Starfighters</u>](https://github.com/Cn33liz/StarFighters) implementation of [<u>Koadic</u>](https://github.com/zerosum0x0/koadic) (an information gathering implant to perform post-exploitation reconnaissance on the victim machine) to load the payload in-memory.
 
 Majority of the code in SNAKEBITE is obscured and encrypted via customized encryption. The decryption sequence consists of Base64 decode followed by XOR - the key for which is calculated at the time of execution. Primarily, an embedded phrase is decoded using Base64 and XORed with another embedded string. The resulting key is stored in the variable “keeee” and is used as the XOR decryption key for the rest of the payload. The aforementioned sequence is continued for every encrypted string which ultimately unravels the assembly payload embedded within the script.
 
@@ -58,7 +58,7 @@ var keeee = QeTPECI("dDsB",qdeH("mdn"+"n1n"+"Wbl"+"Pu1"));
 <p style="text-align: center;">The Base64 and XOR decryption sequence</p>
 
 
-SNAKEBITE features a modified build of Starfighters (an in-memory launcher that has also been included in the Koadic framework as an implant) which seeks to deploy the MEMFANG implant directly into memory. The modified payload is a .NET assembly converted to javascript using [DotNetToJScript](https://github.com/tyranid/DotNetToJScript).
+SNAKEBITE features a modified build of Starfighters (an in-memory launcher that has also been included in the Koadic framework as an implant) which seeks to deploy the MEMFANG implant directly into memory. The modified payload is a .NET assembly converted to javascript using [<u>DotNetToJScript</u>](https://github.com/tyranid/DotNetToJScript).
 
 ```{javascript}
 var dash = "";
@@ -268,7 +268,7 @@ S-VENOM collects network information from all available interfaces using the Get
 
 ## Outlook
 
-The current arsenal of Sidewinder against the Windows based systems indicates their heavy utilization of open-source offensive tools and latest vulnerabilities or POCs shared by Google Project Zero. Koadic framework has also [reportedly been used](https://attack.mitre.org/software/S0250/) by other advanced threat activity groups like MuddyWater and APT28.
+The current arsenal of Sidewinder against the Windows based systems indicates their heavy utilization of open-source offensive tools and latest vulnerabilities or POCs shared by Google Project Zero. Koadic framework has also [<u>reportedly been used</u>](https://attack.mitre.org/software/S0250/) by other advanced threat activity groups like MuddyWater and APT28.
 
 SideWinder’s continued usage of open-source tooling points to two potential scenarios; conservation of resources by using open-source tools despite public coverage and detection or an intentional effort to make attribution hard for defenders.
 
